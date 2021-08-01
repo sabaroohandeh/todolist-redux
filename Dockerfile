@@ -1,12 +1,11 @@
-FROM node:lts 
+FROM node:lts as builder
 
-WORKDIR /app
+WORKDIR /app/
+ADD package.json ./
+RUN yarn
 
-COPY package.json .
-RUN yarn install
-
-COPY . .
+ADD . /app/
 RUN yarn build
 
-FROM staticdeploy/app-server:cra-runtime
+FROM hub.hamdocker.ir/staticdeploy/app-server:cra-runtime
 COPY --from=0 /app/build /build
