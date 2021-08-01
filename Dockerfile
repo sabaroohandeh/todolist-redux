@@ -3,7 +3,7 @@ FROM node:lts
 WORKDIR /app
 
 COPY package.json .
-RUN yarn 
+RUN yarn install
 
 COPY . .
 RUN yarn build
